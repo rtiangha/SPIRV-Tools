@@ -33,20 +33,7 @@ else()
   set(SPIRV_HEADER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/spirv-headers)
 endif()
 
-if (IS_DIRECTORY ${SPIRV_HEADER_DIR})
-  # TODO(dneto): We should not be modifying the parent scope.
-  set(SPIRV_HEADER_INCLUDE_DIR ${SPIRV_HEADER_DIR}/include PARENT_SCOPE)
-
-  # Add SPIRV-Headers as a sub-project if it isn't already defined.
-  # Do this so enclosing projects can use SPIRV-Headers_SOURCE_DIR to find
-  # headers to include.
-  if (NOT DEFINED SPIRV-Headers_SOURCE_DIR)
-    add_subdirectory(${SPIRV_HEADER_DIR})
-  endif()
-else()
-  message(FATAL_ERROR
-    "SPIRV-Headers was not found - please checkout a copy under external/.")
-endif()
+add_subdirectory(SPIRV-Headers)
 
 if (NOT ${SPIRV_SKIP_TESTS})
   # Find gmock if we can. If it's not already configured, then try finding
